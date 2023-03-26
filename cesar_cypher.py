@@ -46,7 +46,7 @@ class Cypher():
         print(f"Text cyphered: {text_cyphered_fibonacci}")
 
 if __name__ == "__main__":
-    text = "Casa"
+    text = "Home"
     positions = 2
     action = True
     cypher = Cypher(text, positions, action)
