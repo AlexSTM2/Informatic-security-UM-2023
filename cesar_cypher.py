@@ -1,53 +1,53 @@
 #Im going to cypher a text with the Cesar cypher and Fibonacci sequence.
 
 class Cypher():
-    def __init__(self, text=str, positions=int, action=bool):
+
+    def __init__(self, text=str, action=bool):
         self.text = text
-        self.positions = positions
         self.action = action
         self.alphabet = "abcdefghijklmnopqrstuvwxyz"
 
     def run(self):
-        if self.action == True:
-            self.cipher()
-        else:
-            self.decipher()
+        self.cipher()
+
 
     def cipher(self):
         print(f"Text to cipher: {self.text}")
         alpabeth = self.alphabet
         text = self.text.lower()
-        positions = self.positions
+        positions = len(text)
+        #Fibonacci sequence
+        for i in range(1, positions+1):
+            positions = self.rec_fib(i)
+
         text_cyphered = "" #This is the Ceasar cypher text.
-        text_cyphered_fibonacci = "" #This is the Fibonacci sequence text.
         for letter in text: 
             if letter in alpabeth: #This is the Ceasar cypher
                 index = alpabeth.index(letter)
-                new_index = (index + positions ) % len(alpabeth) 
+                if self.action == False:
+                    new_index = (index - positions ) % len(alpabeth)
+                else:
+                    new_index = (index + positions ) % len(alpabeth) 
+                while new_index > len(alpabeth):
+                    new_index -= len(alpabeth)
                 text_cyphered += alpabeth[new_index]
-        
             else:
                 print(f"Letter {letter} not in alphabet. Continue with the next letter.")
                 text_cyphered += letter
 
-        for letter in text_cyphered: #This is the Fibonacci sequence
-            if letter in alpabeth:
-                cypher_index = alpabeth.index(letter)
-                try:
-                    if cypher_index >= 2:
-                        new_index = (cypher_index-1) + (cypher_index-2)
-                        text_cyphered_fibonacci += alpabeth[new_index]
-                
-                except IndexError:
-                    text_cyphered_fibonacci += letter
-                    print("Index out of range.")
-                    
 
-        print(f"Text cyphered: {text_cyphered_fibonacci}")
+        print(f"Text cyphered: {text_cyphered}")
+
+    def rec_fib(self,n):
+        if n > 1:
+            return self.rec_fib(n-1) + self.rec_fib(n-2)
+        return n
+    
 
 if __name__ == "__main__":
-    text = "Home"
-    positions = 2
-    action = True
-    cypher = Cypher(text, positions, action)
+    text = "krph"
+    action = False
+    cypher = Cypher(text, action)
     cypher.run()
+
+
